@@ -46,7 +46,7 @@ var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
     if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
         txt = xmlhttp.responseText;
-        console.log(txt)
+        //console.log(txt)
         let resultat = JSON.parse(txt)
             //let i = 0;
             //let domString = "\n"
@@ -296,7 +296,7 @@ function setDatas() {
         },
         type: 'scatter3d'
     };
-    console.log(data)
+    //console.log(data)
     var layout = {
         margin: {
             l: 0,
