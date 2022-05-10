@@ -257,7 +257,7 @@ function setDatas() {
         z: joints['z'],
         mode: 'markers',
         marker: {
-            size: 12,
+            size: 6,
             line: {
                 color: 'rgba(255, 217, 217, 0.14)',
                 width: 0.5
