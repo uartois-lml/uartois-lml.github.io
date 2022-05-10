@@ -37,7 +37,7 @@ let xMax,
 // Declare of the interval variable wich allows to display things over time
 let interval;
 
-aButtons.style.display = "none";
+//aButtons.style.display = "none";
 
 speedInput.addEventListener("input", changeSpeed);
 
@@ -73,7 +73,7 @@ xmlhttp.send();
 
 fileSelector.addEventListener('change', (event) => {
     //Display animation's Buttons
-    aButtons.style.display = "block";
+    //aButtons.style.display = "block";
 
     const fileList = event.target.files;
     console.log(fileList);
