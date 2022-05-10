@@ -46,6 +46,7 @@ var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
     if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
         txt = xmlhttp.responseText;
+        console.log(xmlhttp.responseText)
     }
 };
 xmlhttp.open("GET", "https://uartois-lml.github.io/assets/gait-app/record_walking.json", true);
