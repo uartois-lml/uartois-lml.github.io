@@ -303,6 +303,7 @@ function setDatas() {
     Plotly.newPlot('myDiv', [data], layout);
 }
 
+/*
 Plotly.newPlot('div', [{
     x: [1, 2, 3],
     y: [0, 0.5, 1],
@@ -326,3 +327,4 @@ function randomize() {
         }
     })
 }
+*/
