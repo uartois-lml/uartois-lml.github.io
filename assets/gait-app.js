@@ -46,12 +46,11 @@ var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
     if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
         txt = xmlhttp.responseText;
-        console.log(xmlhttp.responseText)
+        console.log(txt)
     }
 };
 xmlhttp.open("GET", "https://uartois-lml.github.io/assets/gait-app/record_walking.json", true);
 xmlhttp.send();
-console.log(txt);
 
 fileSelector.addEventListener('change', (event) => {
     //Display animation's Buttons
