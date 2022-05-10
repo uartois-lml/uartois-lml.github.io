@@ -21,7 +21,7 @@
     </p>
 
     <!-- Plots go in blank <div> elements.-->
-    <div id="myDiv" style="pointer-events: none"></div>
+    <div id="myDiv"></div>
 
     <div>
         <!-- The `multiple` attribute lets users select multiple files. -->
@@ -38,7 +38,11 @@
 
     </div>
 
-    <script src="/assets/gait-app.js" charset="utf-8"></script>
+    <div id="div">
+        <button onclick="randomize()">random</button>
+    </div>
+
+    <script src="./gait-app.js" charset="utf-8"></script>
 
 </body>
 
