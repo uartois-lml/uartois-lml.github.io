@@ -7,10 +7,6 @@
 
     <!-- D3 -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
-
-    <head>
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-    </head>
 </head>
 
 <body>
@@ -19,9 +15,10 @@
         Here's a simple Plotly plot -
         <a href="https://bit.ly/1Or9igj">plotly.js documentation</a>
     </p>
-
     <!-- Plots go in blank <div> elements.-->
     <div id="myDiv"></div>
+    <!-- Plots go in blank <div> elements.-->
+    <div id="myDiv" style="pointer-events: none"></div>
 
     <div>
         <!-- The `multiple` attribute lets users select multiple files. -->
@@ -38,11 +35,7 @@
 
     </div>
 
-    <div id="div">
-        <button onclick="randomize()">random</button>
-    </div>
-
-    <script src="./gait-app.js" charset="utf-8"></script>
+    <script src="/assets/gait-app.js" charset="utf-8"></script>
 
 </body>
 
