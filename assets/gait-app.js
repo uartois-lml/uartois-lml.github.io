@@ -217,6 +217,7 @@ function stopAnimate() {
 function nextStep() {
     var joints = loadedDatas[stepIndex]
     if (joints == undefined) {
+        stopAnimate()
         return
     }
     Plotly.animate('myDiv', {
