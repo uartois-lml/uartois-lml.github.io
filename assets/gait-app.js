@@ -7,7 +7,7 @@ let datas = [];
 //json's keys
 let keys = [];
 
-loadedDatas = []
+let loadedDatas = []
 
 //If a file has been selected or not
 let selectedFile = false;
@@ -45,27 +45,10 @@ var txt = '';
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
     if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
+        resetData();
         txt = xmlhttp.responseText;
         //console.log(txt)
-        let resultat = JSON.parse(txt)
-            //let i = 0;
-            //let domString = "\n"
-        resultat.forEach(element => {
-            var tabTmp = []
-            for (const [key, value] of Object.entries(element)) {
-                //console.log(`${key}: ${value}`);
-                //domString += `${key}: ${value}` + "\n"
-                tabTmp.push([key, value])
-            }
-            datas.push(tabTmp)
-                //domString += "\n"
-                /*
-                domString += Object.entries(element) + "\n\n"
-                */
-        });
-        //document.getElementById('monJson').innerText += domString
-        setDatas()
-        loadDatas()
+        loadFromFile(txt);
     }
 };
 xmlhttp.open("GET", "https://uartois-lml.github.io/assets/gait-app/record_walking.json", true);
@@ -74,32 +57,15 @@ xmlhttp.send();
 fileSelector.addEventListener('change', (event) => {
     //Display animation's Buttons
     //aButtons.style.display = "block";
+    resetData()
 
     const fileList = event.target.files;
     console.log(fileList);
     console.log(fileList[0])
     const reader = new FileReader();
     reader.addEventListener('load', (event) => {
-        let resultat = event.target.result
-        resultat = JSON.parse(resultat)
-        let i = 0;
-        //let domString = "\n"
-        resultat.forEach(element => {
-            var tabTmp = []
-            for (const [key, value] of Object.entries(element)) {
-                //console.log(`${key}: ${value}`);
-                //domString += `${key}: ${value}` + "\n"
-                tabTmp.push([key, value])
-            }
-            datas.push(tabTmp)
-                //domString += "\n"
-                /*
-                domString += Object.entries(element) + "\n\n"
-                */
-        });
-        //document.getElementById('monJson').innerText += domString
-        setDatas()
-        loadDatas()
+        let resultat = event.target.result;
+        loadFromFile(resultat);
     });
     reader.readAsText(fileList[0])
 
@@ -193,6 +159,34 @@ function changeSpeed() {
     }
 }
 
+function resetData() {
+    stopAnimate();
+    datas = [];
+    keys = [];
+    loadedDatas = [];
+}
+
+function loadFromFile(resultat) {
+    resultat = JSON.parse(resultat)
+    let i = 0;
+    //let domString = "\n"
+    resultat.forEach(element => {
+        var tabTmp = []
+        for (const [key, value] of Object.entries(element)) {
+            //console.log(`${key}: ${value}`);
+            //domString += `${key}: ${value}` + "\n"
+            tabTmp.push([key, value])
+        }
+        datas.push(tabTmp)
+            //domString += "\n"
+            /*
+            domString += Object.entries(element) + "\n\n"
+            */
+    });
+    //document.getElementById('monJson').innerText += domString
+    setDatas()
+    loadDatas()
+}
 
 //launch the animation if not already, Change the second parameter
 //of the setInterval function to change the speed animation
