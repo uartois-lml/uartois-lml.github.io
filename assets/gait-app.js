@@ -166,22 +166,14 @@ function resetData() {
 
 function loadFromFile(resultat) {
     resultat = JSON.parse(resultat)
-    let i = 0;
-    //let domString = "\n"
     resultat.forEach(element => {
         var tabTmp = []
         for (const [key, value] of Object.entries(element)) {
             //console.log(`${key}: ${value}`);
-            //domString += `${key}: ${value}` + "\n"
             tabTmp.push([key, value])
         }
         datas.push(tabTmp)
-            //domString += "\n"
-            /*
-            domString += Object.entries(element) + "\n\n"
-            */
     });
-    //document.getElementById('monJson').innerText += domString
     setDatas()
     loadDatas()
 }
