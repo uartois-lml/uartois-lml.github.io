@@ -215,7 +215,7 @@ function stopAnimate() {
 
 // load the next position of each points in the plot
 function nextStep() {
-    var joints = getDataStep(stepIndex)
+    var joints = loadedDatas[stepIndex]
     if (joints == undefined) {
         return
     }
@@ -250,17 +250,11 @@ function nextStep() {
 
 
 function loadDatas() {
-    loadedDatas = datas.reduce((acc, currentValue, index) => {
-        console.log(currentValue)
-        if (index % indexJump == 0) {
-            acc.push(getDataStep(index))
-                //console.log("index: ", index);
-                //console.log(getDataStep(index));
-        }
-        return acc
-    });
-    console.log("loadedDatas: ", loadedDatas)
-    console.log(datas)
+    var i = 0;
+    while (i <= datas.length) {
+        loadedDatas.push(getDataStep(++i))
+    }
+    console.log(loadedDatas)
 }
 
 // Initiate the plot with values of the index zero
