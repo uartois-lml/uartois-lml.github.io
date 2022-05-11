@@ -1,13 +1,14 @@
 const fileSelector = document.getElementById('file-selector');
 const aButtons = document.getElementById("animationButtons");
 const speedInput = document.getElementById("speedInput")
-    // Les données du jon
+
+// json's file datas
 let datas = [];
 
-//json's keys
+// json's keys
 let keys = [];
 
-//all the datas formatted
+// all the datas formatted
 let loadedDatas = []
 
 // Actual step of the animation
@@ -16,6 +17,7 @@ let stepIndex = 1;
 // Step when the Stop button have been pressed
 let stopIndex = 1;
 
+// If the animation has been launched or not
 let isAnimating = false;
 
 // The animation Speed (the refresh every x milliseconds) seems to be caped
@@ -24,7 +26,7 @@ let animationSpeed = 30
 // How many index will the animation skip between two steps
 let indexJump = 1
 
-//Values used to correctly scale the plot layout
+// Values used to correctly scale the plot layout
 let xMin,
     yMin,
     zMin;
@@ -35,7 +37,7 @@ let xMax,
 // Declare of the interval variable wich allows to display things over time
 let interval;
 
-//aButtons.style.display = "none";
+// aButtons.style.display = "none";
 
 speedInput.addEventListener("input", changeSpeed);
 
@@ -88,8 +90,7 @@ function createDico(i) {
     };
 }
 
-//renvoie les données correspondant à la cle et à l'index donnée en parametres
-//sous la forme d'un tableau de float à 3 dimensions
+// return the data formated with the index and key given in parameter
 function getData(key, index) {
     var retour = ''
     datas[index].forEach((elt) => {
@@ -107,7 +108,7 @@ function getData(key, index) {
     })
 }
 
-//return le tableau de donnée correspondant à l'étape donné en paramètre
+// return a dictionnary with every coordonate in x,y and z from the index given in parameter
 function getDataStep(index) {
     if (index >= datas.length) {
         stopAnimate()
@@ -178,8 +179,8 @@ function loadFromFile(resultat) {
     loadDatas()
 }
 
-//launch the animation if not already, Change the second parameter
-//of the setInterval function to change the speed animation
+// launch the animation if not already, Change the second parameter
+// of the setInterval function to change the speed animation
 function animation() {
     if (!isAnimating) {
         interval = setInterval(increment, animationSpeed);
@@ -187,7 +188,7 @@ function animation() {
     }
 }
 
-//Simple incrementation used in the setInterval function
+// Simple incrementation used in the setInterval function
 function increment() {
     stepIndex += indexJump;
     nextStep()
@@ -201,7 +202,7 @@ function resume() {
     }
 }
 
-//stop the animation
+// stop the animation
 function stopAnimate() {
     if (isAnimating) {
         clearInterval(interval)
@@ -212,7 +213,7 @@ function stopAnimate() {
 }
 
 
-//load the next position of each points in the plot
+// load the next position of each points in the plot
 function nextStep() {
     var joints = getDataStep(stepIndex)
     if (joints == undefined) {
@@ -262,7 +263,7 @@ function loadDatas() {
     console.log(datas)
 }
 
-//initialise la vue plot avec les valeurs initiales du json
+// Initiate the plot with values of the index zero
 function setDatas() {
     for (const [key] of datas[0]) {
         if (!isNaN(getData(key, 0)[0])) {
