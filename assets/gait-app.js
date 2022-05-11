@@ -7,10 +7,8 @@ let datas = [];
 //json's keys
 let keys = [];
 
+//all the datas formatted
 let loadedDatas = []
-
-//If a file has been selected or not
-let selectedFile = false;
 
 // Actual step of the animation
 let stepIndex = 1;
@@ -225,6 +223,9 @@ function stopAnimate() {
 //load the next position of each points in the plot
 function nextStep() {
     var joints = getDataStep(stepIndex)
+    if (joints == undefined) {
+        return
+    }
     Plotly.animate('myDiv', {
         data: [{
             x: joints['x'],
@@ -257,8 +258,11 @@ function nextStep() {
 
 function loadDatas() {
     loadedDatas = datas.reduce((acc, currentValue, index) => {
+        console.log(currentValue)
         if (index % indexJump == 0) {
             acc.push(getDataStep(index))
+                //console.log("index: ", index);
+                //console.log(getDataStep(index));
         }
         return acc
     });
