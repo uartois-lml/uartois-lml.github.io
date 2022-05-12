@@ -61,7 +61,7 @@ fileSelector.addEventListener('change', (event) => {
 
     const fileList = event.target.files;
     console.log(fileList);
-    console.log(fileList[0])
+    //console.log(fileList[0])
     const reader = new FileReader();
     reader.addEventListener('load', (event) => {
         let resultat = event.target.result;
@@ -255,7 +255,6 @@ function loadDatas() {
     while (i <= datas.length) {
         loadedDatas.push(getDataStep(++i))
     }
-    console.log(loadedDatas)
 }
 
 // Initiate the plot with values of the index zero
