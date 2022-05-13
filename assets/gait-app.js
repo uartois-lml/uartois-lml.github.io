@@ -34,6 +34,8 @@ let xMax,
     yMax,
     zMax;
 
+const DEFAULT_COLOR = 'rgb(255, 0, 0, 0.14)';
+
 // Declare of the interval variable wich allows to display things over time
 let interval;
 
@@ -72,6 +74,7 @@ fileSelector.addEventListener('change', (event) => {
     //readImage(fileList[0])
 });
 
+/*
 function createDico(i) {
     return {
         x: [i],
@@ -81,7 +84,7 @@ function createDico(i) {
         marker: {
             size: 12,
             line: {
-                color: 'rgba(217, 217, 217, 0.14)',
+                color: DEFAULT_COLOR,
                 width: 0.5
             },
             opacity: 0.8
@@ -89,6 +92,7 @@ function createDico(i) {
         type: 'scatter3d'
     };
 }
+*/
 
 // return the data formated with the index and key given in parameter
 function getData(key, index) {
@@ -273,8 +277,9 @@ function setDatas() {
         mode: 'markers',
         marker: {
             size: 6,
+            color: DEFAULT_COLOR,
             line: {
-                color: 'rgba(255, 217, 217, 0.14)',
+                color: DEFAULT_COLOR,
                 width: 0.5
             },
             opacity: 0.8
