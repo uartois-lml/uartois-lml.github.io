@@ -2,6 +2,8 @@ const fileSelector = document.getElementById('file-selector');
 const aButtons = document.getElementById("animationButtons");
 const speedInput = document.getElementById("speedInput")
 
+const DEFAULT_COLOR = 'rgb(255, 0, 0, 0.14)';
+
 // json's file datas
 let datas = [];
 
@@ -33,8 +35,6 @@ let xMin,
 let xMax,
     yMax,
     zMax;
-
-const DEFAULT_COLOR = 'rgb(255, 0, 0, 0.14)';
 
 // Declare of the interval variable wich allows to display things over time
 let interval;
@@ -110,6 +110,20 @@ function getData(key, index) {
     return myData.map(function(elt) {
         return parseFloat(elt)
     })
+}
+
+function getPartKeys() {
+
+}
+
+// return the index of the key given in parameter from keys tab
+function getKeyIndex(key) {
+    var i = 0;
+    var trouve = false;
+    while (!trouve && i < keys.length) {
+        trouve = (keys[i++] == key)
+    }
+    return --i;
 }
 
 // return a dictionnary with every coordonate in x,y and z from the index given in parameter
@@ -195,14 +209,14 @@ function animation() {
 // Simple incrementation used in the setInterval function
 function increment() {
     stepIndex += indexJump;
-    nextStep()
+    nextStep();
 }
 
 // make the animation resume where it has been stopped
 function resume() {
     if (!isAnimating) {
-        stepIndex = stopIndex
-        animation()
+        stepIndex = stopIndex;
+        animation();
     }
 }
 
@@ -210,9 +224,9 @@ function resume() {
 function stopAnimate() {
     if (isAnimating) {
         clearInterval(interval)
-        stopIndex = stepIndex
-        stepIndex = 1
-        isAnimating = false
+        stopIndex = stepIndex;
+        stepIndex = 1;
+        isAnimating = false;
     }
 }
 
@@ -221,8 +235,8 @@ function stopAnimate() {
 function nextStep() {
     var joints = loadedDatas[stepIndex]
     if (joints == undefined) {
-        stopAnimate()
-        return
+        stopAnimate();
+        return;
     }
     Plotly.animate('myDiv', {
         data: [{
@@ -250,7 +264,7 @@ function nextStep() {
         frame: {
             duration: animationSpeed,
         }
-    })
+    });
 }
 
 
@@ -261,15 +275,20 @@ function loadDatas() {
     }
 }
 
-// Initiate the plot with values of the index zero
-function setDatas() {
+// Init variables: keys, keysIndex
+function initKeys() {
     for (const [key] of datas[0]) {
         if (!isNaN(getData(key, 0)[0])) {
             keys.push(key)
         }
     }
+}
 
-    var joints = getDataStep(0)
+// Initiate the plot with values of the index zero
+function setDatas() {
+    initKeys();
+
+    var joints = getDataStep(0);
     var data = {
         x: joints['x'],
         y: joints['y'],
@@ -279,7 +298,7 @@ function setDatas() {
             size: 6,
             color: DEFAULT_COLOR,
             line: {
-                color: DEFAULT_COLOR,
+                color: 'rgb(217, 217, 217, 0.14)',
                 width: 0.5
             },
             opacity: 0.8
