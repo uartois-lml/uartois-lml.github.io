@@ -112,8 +112,20 @@ function getData(key, index) {
     })
 }
 
-function getPartKeys() {
-
+//TODO
+function getPartKeys(part) {
+    var myKeys = {};
+    keys.forEach((key) => {
+        if (key.includes(part)) {
+            var myIndex = getKeyIndex(key)
+            myKeys[key] = {};
+            myKeys[key]['x'] = loadedDatas[5]['x'][myIndex];
+            myKeys[key]['y'] = loadedDatas[5]['y'][myIndex];
+            myKeys[key]['z'] = loadedDatas[5]['z'][myIndex];
+        }
+    });
+    console.log(myKeys);
+    console.log(datas);
 }
 
 // return the index of the key given in parameter from keys tab
@@ -193,8 +205,9 @@ function loadFromFile(resultat) {
         }
         datas.push(tabTmp)
     });
-    setDatas()
-    loadDatas()
+    setDatas();
+    loadDatas();
+    getPartKeys('arm');
 }
 
 // launch the animation if not already, Change the second parameter
