@@ -10,6 +10,20 @@ let datas = [];
 // json's keys
 let keys = [];
 
+//parts
+let parts = {
+    arm: 'rgb(255, 0, 0, 0.8)',
+    hand: 'rgb(255, 0, 0, 0.14)',
+    leg: 'rgb(0, 0, 255, 0.14)',
+    foot: 'rgb(0, 0, 255, 0.14)',
+    neck: 'rgb(0, 255, 0, 0.14)',
+    head: 'rgb(0, 255, 0, 0.14)',
+    spine: 'rgb(88, 41, 0, 0.14)',
+    body: 'rgb(88, 41, 0, 0.14)',
+    root: 'rgb(88, 41, 0, 0.14)',
+    hips: 'rgb(88, 41, 0, 0.14)',
+};
+
 // all the datas formatted
 let loadedDatas = []
 
@@ -112,20 +126,19 @@ function getData(key, index) {
     })
 }
 
-//TODO
-function getPartKeys(part) {
+function getPartKeys(part, myDatas) {
     var myKeys = {};
     keys.forEach((key) => {
         if (key.includes(part)) {
             var myIndex = getKeyIndex(key)
             myKeys[key] = {};
-            myKeys[key]['x'] = loadedDatas[5]['x'][myIndex];
-            myKeys[key]['y'] = loadedDatas[5]['y'][myIndex];
-            myKeys[key]['z'] = loadedDatas[5]['z'][myIndex];
+            myKeys[key]['x'] = myDatas['x'][myIndex];
+            myKeys[key]['y'] = myDatas['y'][myIndex];
+            myKeys[key]['z'] = myDatas['z'][myIndex];
         }
     });
-    console.log(myKeys);
-    console.log(datas);
+    console.log(myKeys)
+    return myKeys
 }
 
 // return the index of the key given in parameter from keys tab
@@ -207,7 +220,6 @@ function loadFromFile(resultat) {
     });
     setDatas();
     loadDatas();
-    getPartKeys('arm');
 }
 
 // launch the animation if not already, Change the second parameter
@@ -284,11 +296,11 @@ function nextStep() {
 function loadDatas() {
     var i = 0;
     while (i <= datas.length) {
-        loadedDatas.push(getDataStep(++i))
+        loadedDatas.push(getDataStep(i++))
     }
 }
 
-// Init variables: keys, keysIndex
+// Init variable: keys
 function initKeys() {
     for (const [key] of datas[0]) {
         if (!isNaN(getData(key, 0)[0])) {
@@ -297,26 +309,44 @@ function initKeys() {
     }
 }
 
+function parseDataPart(myData) {
+    parsedDatas = {
+        x: [],
+        y: [],
+        z: [],
+    }
+    for (const [key, value] of Object.entries(myData)) {
+        parsedDatas['x'].push(value['x']);
+        parsedDatas['y'].push(value['y']);
+        parsedDatas['z'].push(value['z']);
+    }
+    return parsedDatas
+}
+
 // Initiate the plot with values of the index zero
 function setDatas() {
     initKeys();
 
     var joints = getDataStep(0);
-    var data = {
-        x: joints['x'],
-        y: joints['y'],
-        z: joints['z'],
-        mode: 'markers',
-        marker: {
-            size: 6,
-            color: DEFAULT_COLOR,
-            line: {
-                color: 'rgb(217, 217, 217, 0.14)',
-                width: 0.5
+    var data = []
+    for (const [key, value] of Object.entries(parts)) {
+        myParsedDataPart = parseDataPart(getPartKeys(key, joints));
+        data.push({
+            x: myParsedDataPart['x'],
+            y: myParsedDataPart['y'],
+            z: myParsedDataPart['z'],
+            mode: 'markers',
+            marker: {
+                size: 6,
+                color: value,
+                line: {
+                    color: 'rgb(217, 217, 217, 0.14)',
+                    width: 0.5
+                },
+                opacity: 0.8
             },
-            opacity: 0.8
-        },
-        type: 'scatter3d'
+            type: 'scatter3d'
+        });
     };
     //console.log(data)
     var layout = {
@@ -352,7 +382,7 @@ function setDatas() {
         height: 500,
         autosize: false
     };
-    Plotly.newPlot('myDiv', [data], layout);
+    Plotly.newPlot('myDiv', data, layout);
 }
 
 /*
