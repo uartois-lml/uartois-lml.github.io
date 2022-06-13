@@ -37,7 +37,7 @@ let stopIndex = 1;
 let isAnimating = false;
 
 // The animation Speed (the refresh every x milliseconds) seems to be caped
-let animationSpeed = 30
+let animationSpeed = 0
 
 // How many index will the animation skip between two steps
 let indexJump = 1
@@ -137,7 +137,6 @@ function getPartKeys(part, myDatas) {
             myKeys[key]['z'] = myDatas['z'][myIndex];
         }
     });
-    console.log(myKeys)
     return myKeys
 }
 
@@ -263,25 +262,33 @@ function nextStep() {
         stopAnimate();
         return;
     }
-    Plotly.animate('myDiv', {
-        data: [{
-            x: joints['x'],
-            y: joints['y'],
-            z: joints['z'],
-            mode: 'markers',
-            marker: {
-                size: 6,
-                line: {
-                    color: 'rgba(217, 217, 217, 0.14)',
-                    width: 0.5
+
+    var data = []
+    var i = 0;
+    for (const [key, value] of Object.entries(parts)) {
+        myParsedDataPart = parseDataPart(getPartKeys(key, joints));
+        data.push({
+            data: [{
+                x: myParsedDataPart['x'],
+                y: myParsedDataPart['y'],
+                z: myParsedDataPart['z'],
+                mode: 'markers',
+                marker: {
+                    size: 6,
+                    line: {
+                        color: 'rgba(217, 217, 217, 0.14)',
+                        width: 0.5
+                    },
+                    opacity: 0.8
                 },
-                opacity: 0.8
-            },
-            type: 'scatter3d'
-        }],
-        traces: [],
-        layout: {}
-    }, {
+                type: 'scatter3d'
+            }],
+            traces: [i++],
+            layout: {}
+        });
+    }
+
+    Plotly.animate('myDiv', data, {
         transition: {
             duration: animationSpeed,
             easing: 'linear'
