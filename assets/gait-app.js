@@ -226,10 +226,19 @@ function loadFromFile(resultat) {
 
 // launch the animation if not already, Change the second parameter
 // of the setInterval function to change the speed animation
-function animation() {
+/*function animation() {
     if (!isAnimating) {
         interval = setInterval(increment, animationSpeed);
         isAnimating = true
+    }
+}
+*/
+
+function animation() {
+    isAnimating = true
+    while (stepIndex < loadedDatas.length && isAnimating) {
+        nextStep();
+        stepIndex += indexJump;
     }
 }
 
