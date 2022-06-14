@@ -24,6 +24,9 @@ let parts = {
     hips: 'rgb(88, 41, 0, 0.14)',
 };
 
+//traces for Plotly.animate
+let traces = [];
+
 // all the datas formatted
 let loadedDatas = []
 
@@ -263,29 +266,23 @@ function nextStep() {
         return;
     }
 
-    var data = []
-    var i = 0;
+    var updateData = []
     for (const [key, value] of Object.entries(parts)) {
         myParsedDataPart = parseDataPart(getPartKeys(key, joints));
-        data.push({
-            data: [{
-                x: myParsedDataPart['x'],
-                y: myParsedDataPart['y'],
-                z: myParsedDataPart['z'],
-                mode: 'markers',
-                marker: {
-                    size: 6,
-                    line: {
-                        color: 'rgba(217, 217, 217, 0.14)',
-                        width: 0.5
-                    },
-                    opacity: 0.8
-                },
-                type: 'scatter3d'
-            }],
-            traces: [i++],
-            layout: {}
+        updateData.push({
+            x: myParsedDataPart['x'],
+            y: myParsedDataPart['y'],
+            z: myParsedDataPart['z'],
+            marker: {
+                size: 6,
+                opacity: 0.8
+            },
         });
+    }
+    var data = {
+        data: updateData,
+        traces: traces,
+        layout: {}
     }
 
     Plotly.animate('myDiv', data, {
@@ -333,7 +330,7 @@ function parseDataPart(myData) {
 // Initiate the plot with values of the index zero
 function setDatas() {
     initKeys();
-
+    var i = 0;
     var joints = getDataStep(0);
     var data = []
     for (const [key, value] of Object.entries(parts)) {
@@ -354,6 +351,7 @@ function setDatas() {
             },
             type: 'scatter3d'
         });
+        traces.push(i++);
     };
     //console.log(data)
     var layout = {
